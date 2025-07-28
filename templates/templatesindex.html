@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather & AQI Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🌤️ Weather & AQI Dashboard</h1>
+    <form method="POST">
+      <input type="text" name="city" placeholder="Enter city..." required />
+      <button type="submit">Search</button>
+    </form>
+
+    {% if data.error %}
+      <p class="error">{{ data.error }}</p>
+    {% elif data.city %}
+      <div class="card">
+        <h2>{{ data.city }}</h2>
+        <p>Temperature: {{ data.temperature }} °C</p>
+        <p>Humidity: {{ data.humidity }}%</p>
+        <p>Wind Speed: {{ data.wind }} km/h</p>
+        <p>AQI: {{ data.aqi }}</p>
+        <p>PM2.5: {{ data.pm25 }}</p>
+        <p>PM10: {{ data.pm10 }}</p>
+        <div id="map" style="height: 250px;"></div>
+      </div>
+      <script>
+        const lat = {{ data.lat }};
+        const lon = {{ data.lon }};
+      </script>
+    {% endif %}
+  </div>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="/static/script.js"></script>
+</body>
+</html>
